@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import userDetailsRouter from './routes/userDetails.js'
 import boardDetailsRouter from './routes/boardDetails.js'
 import authenticationRouter from './routes/authentication.js'
+import taskDetailsRouter from './routes/taskDetails.js'
 
 dotenv.config();
 
@@ -27,7 +28,7 @@ if (process.env.NODE_ENV === "development") {
 app.use('/api', userDetailsRouter)
 app.use('/api', boardDetailsRouter)
 app.use('/api', authenticationRouter)
-
+app.use('/api', taskDetailsRouter)
 
 if (process.env.NODE_ENV === "production") {
   app.get("/*", (_, res) => res.sendFile(path.resolve("public", "index.html")));

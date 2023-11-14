@@ -157,7 +157,7 @@ const createUsersTable = async () => {
         task_status VARCHAR(320) NOT NULL,
         task_start_time VARCHAR(320) NOT NULL,
         task_end_time VARCHAR(320) NOT NULL,
-        task_date DATE NOT NULL
+        task_date VARCHAR(10) NOT NULL
       )
     `
     try {
