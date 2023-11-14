@@ -11,19 +11,19 @@ function Home() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  const checkUser = async () => {
-    const isUserLoggedIn = await validateUser();
-    console.log(isUserLoggedIn);
-    if (isUserLoggedIn) {
-      setUserLoggedIn((prev) => !prev);
-    } else {
-      navigate("/login", { replace: true });
-    }
-  };
+  // const checkUser = async () => {
+  //   const isUserLoggedIn = await validateUser();
+  //   console.log(isUserLoggedIn);
+  //   if (isUserLoggedIn) {
+  //     setUserLoggedIn((prev) => !prev);
+  //   } else {
+  //     navigate("/login", { replace: true });
+  //   }
+  // };
 
-  useEffect(() => {
-    checkUser();
-  }, []);
+  // useEffect(() => {
+  //   checkUser();
+  // }, []);
 
   return (
     <>

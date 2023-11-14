@@ -3,28 +3,38 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import userInfo from "../dummydata/login";
+import validateUser from "../services/validateUser";
+import loginUser from "../services/loginUser";
+import registerUser from "../services/registerUser";
 
 function Login() {
   const navigate = useNavigate();
+  const [emailTyped, setEmailTyped] = useState("");
   const [isNewAttempt, setNewAttempt] = useState(true);
   const [isRegisteredUser, setRegisteredUser] = useState(false);
-  const [schema, setSchema] = useState();
+  const [schema, setSchema] = useState(
+    yup.object().shape({
+      email: yup.string().required("Email is required!"),
+      password: yup.string().required("Password is required!"),
+    })
+  );
 
   const [emailBtnVisible, setEmailBtnVisible] = useState(false);
   const handleEmailButton = (e) => {
     console.log(e.target.value);
+    setEmailTyped(e.target.value);
     setEmailBtnVisible(e.target.value.length > 1);
   };
 
-  const checkUserExists = () => {
-    setRegisteredUser((prev) => !prev);
-    if (!isRegisteredUser) {
+  const checkUserExists = async () => {
+    const response = await validateUser(emailTyped);
+    setRegisteredUser(response);
+    if (!response) {
       const registerSchema = yup.object().shape({
         email: yup.string().required("Email is required!"),
         password: yup.string().required("Password is required!"),
-        // name: yup.string().required("Name is required!"),
-        // phone: yup.string().required("Phone Number is required!"),
+        name: yup.string().required("Name is required!"),
+        phone: yup.string().required("Phone Number is required!"),
       });
       setSchema(registerSchema);
     } else {
@@ -35,6 +45,7 @@ function Login() {
       setSchema(loginSchema);
     }
     setNewAttempt((prev) => !prev);
+    // setRegisteredUser((prev) => !prev);
   };
 
   // Declare the useForm state where register has formData and handleSubmit helps in submitting form
@@ -46,19 +57,22 @@ function Login() {
   } = useForm({ resolver: yupResolver(schema) });
 
   // The submit function called inside handleSubmit state method
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setNewAttempt((prev) => true);
     setRegisteredUser((prev) => false);
     setEmailBtnVisible(false);
+    console.log(data);
     if ("name" in data) {
       console.log("register");
+      const response = await registerUser(data);
+      console.log(response);
     } else {
       console.log("login");
+      const response = await loginUser(data);
+      console.log(response);
     }
-    console.log(data);
     reset();
     navigate("/", { replace: true });
-    userInfo.token = "#####";
   };
 
   return (

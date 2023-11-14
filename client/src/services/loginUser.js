@@ -1,0 +1,26 @@
+import useFetch from "../utilities/useFetch";
+
+const loginUser = async (data) => {
+  const request = {
+    URL: "http://localhost:3000/login",
+    METHOD: "POST",
+    BODY: {
+      email: data.email,
+      password: data.password,
+    },
+    HEADERS: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const response = await useFetch(request);
+  console.log(response);
+  if (response.hasOwnProperty("name")) {
+    return response;
+  } else {
+    console.error("Login Failed:", response);
+    return response;
+  }
+};
+
+export default loginUser;
