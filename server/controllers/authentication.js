@@ -123,7 +123,7 @@ const userEmailExists = async (req, res) => {
       res.status(200).json({ validUser: true, message: "Email exists" });
     } else {
       res
-        .status(400)
+        .status(200)
         .json({ validUser: false, message: "Email does not exist" });
     }
   } catch (error) {

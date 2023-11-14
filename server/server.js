@@ -27,6 +27,7 @@ if (process.env.NODE_ENV === "development") {
 // add functionality to restrict backend connection only to front-end post 5173
 const corsOptions = {
   origin: "http://localhost:5173",
+  credentials: true,
 };
 app.use(cors(corsOptions));
 
