@@ -1,19 +1,22 @@
 import useFetch from "../utilities/useFetch";
 
-const validateUser = async () => {
+const validateUser = async (email) => {
   const request = {
-    URL: "",
-    METHOD: "TESTING",
-    BODY: "",
-    COOKIE: "#####",
+    URL: "http://localhost:3000/checkUser",
+    METHOD: "POST",
+    BODY: { email },
+    HEADERS: {
+      "Content-Type": "application/json",
+    },
   };
+
   const response = await useFetch(request);
-  if (response.status === 200) {
-    console.log(response.message);
+  if (response.validUser) {
     return true;
+  } else {
+    console.log("Invalid user:", response);
+    return false;
   }
-  console.log(response.message);
-  return false;
 };
 
 export default validateUser;

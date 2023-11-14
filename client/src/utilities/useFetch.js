@@ -1,37 +1,28 @@
 import axios from "axios";
-import userInfo from "../dummydata/login";
-
 const useFetch = async (request) => {
-  const { URL, METHOD, BODY, COOKIE } = request;
-
-  if (METHOD === "TESTING") {
-    if (COOKIE === userInfo.token) {
-      return {
-        status: 200,
-        message: "Valid Token Found: User Already Logged In",
-      };
+  try {
+    if (request.METHOD === "GET") {
+      const response = await axios.get(URL);
+      return response.data; // Assuming you want to return the data portion of the response
     }
-    return { status: 400, message: "Invalid Token: User Not Logged In" };
-  }
 
-  if (METHOD === "GET") {
-    const response = await axios.get(URL);
-    return response;
-  }
+    if (request.METHOD === "POST") {
+      const response = await axios.post(request.URL, request.BODY);
+      return response.data;
+    }
 
-  if (METHOD === "POST") {
-    const response = await axios.post(URL);
-    return response;
-  }
+    if (request.METHOD === "PATCH" || METHOD === "PUT") {
+      const response = await axios.patch(URL);
+      return response.data;
+    }
 
-  if (METHOD === "PATCH" || METHOD === "PUT") {
-    const response = await axios.patch(URL);
-    return response;
-  }
-
-  if (METHOD === "DELETE") {
-    const response = await axios.delete(URL);
-    return response;
+    if (request.METHOD === "DELETE") {
+      const response = await axios.delete(URL);
+      return response.data;
+    }
+  } catch (err) {
+    console.error(err.message);
+    return { error: err.message };
   }
 };
 
