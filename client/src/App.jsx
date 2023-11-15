@@ -3,6 +3,7 @@ import { useRoutes } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import TasksDisplay from "./pages/TasksDisplay";
 // import Navbar from "./components/Navbar";
 // import CreateBoard from "./pages/CreateBoard";
 
@@ -16,7 +17,10 @@ const App = () => {
       path: "/",
       element: <Home />,
     },
-
+    {
+      path: "/:board/:date",
+      element: <TasksDisplay />,
+    },
     // {
     //   path: "/createboard",
     //   element: <CreateBoard />,

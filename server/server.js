@@ -5,9 +5,11 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 // import the router from your routes file
-import userDetailsRouter from "./routes/userDetails.js";
-import boardDetailsRouter from "./routes/boardDetails.js";
-import authenticationRouter from "./routes/authentication.js";
+import userDetailsRouter from './routes/userDetails.js'
+import boardDetailsRouter from './routes/boardDetails.js'
+import authenticationRouter from './routes/authentication.js'
+import taskDetailsRouter from './routes/taskDetails.js'
+
 
 dotenv.config();
 
@@ -24,6 +26,13 @@ if (process.env.NODE_ENV === "development") {
   app.use(express.static("public"));
 }
 
+
+// specify the api path for the server to use
+app.use('/api', userDetailsRouter)
+app.use('/api', boardDetailsRouter)
+app.use('/api', authenticationRouter)
+app.use('/api', taskDetailsRouter)
+
 // add functionality to restrict backend connection only to front-end post 5173
 const corsOptions = {
   origin: "http://localhost:5173",
@@ -31,10 +40,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// specify the api path for the server to use
-app.use("/", userDetailsRouter);
-app.use("/", boardDetailsRouter);
-app.use("/", authenticationRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.get("/*", (_, res) => res.sendFile(path.resolve("public", "index.html")));
