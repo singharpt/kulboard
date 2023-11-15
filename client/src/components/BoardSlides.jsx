@@ -1,30 +1,18 @@
 import boardsInfo from "../dummydata/boardsData";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
 function BoardSlides() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-around",
-      }}
-    >
-      {boardsInfo.map((item) => (
-        <div
-          style={{
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            padding: "10px",
-            margin: "10px",
-            width: "200px",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <h3>Board Name: {item?.boardname}</h3>
-          <p>Member1: {item?.boardmember1}</p>
-        </div>
-      ))}
+    <div>
+      <Carousel infiniteLoop={true} width={500} fade={true} showThumbs={false}>
+        {boardsInfo.map((item) => (
+          <div>
+            <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" />
+            <p className="legend">{item?.boardname}</p>
+          </div>
+        ))}
+      </Carousel>
     </div>
   );
 }

@@ -4,8 +4,20 @@ import middlewareAuthentication from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/board/:board_id", BoardDetailsController.getBoardByBoardId);
-router.get("/board/users/:board_id", BoardDetailsController.getUsersByBoardId);
-router.get("/board/tasks/:board_id", BoardDetailsController.getTasksByBoardId);
+router.get(
+  "/board/:board_id",
+  middlewareAuthentication,
+  BoardDetailsController.getBoardByBoardId
+);
+router.get(
+  "/board/users/:board_id",
+  middlewareAuthentication,
+  BoardDetailsController.getUsersByBoardId
+);
+router.get(
+  "/board/tasks/:board_id",
+  middlewareAuthentication,
+  BoardDetailsController.getTasksByBoardId
+);
 
 export default router;
