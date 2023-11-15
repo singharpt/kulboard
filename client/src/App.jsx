@@ -16,6 +16,7 @@ const App = () => {
       path: "/",
       element: <Home />,
     },
+
     // {
     //   path: "/createboard",
     //   element: <CreateBoard />,
