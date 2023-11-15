@@ -26,6 +26,14 @@ if (process.env.NODE_ENV === "development") {
   app.use(express.static("public"));
 }
 
+
+// add functionality to restrict backend connection only to front-end post 5173
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
 //add to parse the cookies
 app.use(cookieParser());
 
@@ -35,12 +43,7 @@ app.use("/api", boardDetailsRouter);
 app.use("/api", authenticationRouter);
 app.use("/api", taskDetailsRouter);
 
-// add functionality to restrict backend connection only to front-end post 5173
-const corsOptions = {
-  origin: "http://localhost:5173",
-  credentials: true,
-};
-app.use(cors(corsOptions));
+
 
 if (process.env.NODE_ENV === "production") {
   app.get("/*", (_, res) => res.sendFile(path.resolve("public", "index.html")));
