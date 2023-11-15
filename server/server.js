@@ -3,13 +3,13 @@ import path from "path";
 import favicon from "serve-favicon";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 // import the router from your routes file
-import userDetailsRouter from './routes/userDetails.js'
-import boardDetailsRouter from './routes/boardDetails.js'
-import authenticationRouter from './routes/authentication.js'
-import taskDetailsRouter from './routes/taskDetails.js'
-
+import userDetailsRouter from "./routes/userDetails.js";
+import boardDetailsRouter from "./routes/boardDetails.js";
+import authenticationRouter from "./routes/authentication.js";
+import taskDetailsRouter from "./routes/taskDetails.js";
 
 dotenv.config();
 
@@ -26,12 +26,14 @@ if (process.env.NODE_ENV === "development") {
   app.use(express.static("public"));
 }
 
+//add to parse the cookies
+app.use(cookieParser());
 
 // specify the api path for the server to use
-app.use('/api', userDetailsRouter)
-app.use('/api', boardDetailsRouter)
-app.use('/api', authenticationRouter)
-app.use('/api', taskDetailsRouter)
+app.use("/api", userDetailsRouter);
+app.use("/api", boardDetailsRouter);
+app.use("/api", authenticationRouter);
+app.use("/api", taskDetailsRouter);
 
 // add functionality to restrict backend connection only to front-end post 5173
 const corsOptions = {
@@ -39,7 +41,6 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
-
 
 if (process.env.NODE_ENV === "production") {
   app.get("/*", (_, res) => res.sendFile(path.resolve("public", "index.html")));

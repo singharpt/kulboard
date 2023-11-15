@@ -40,7 +40,7 @@ const registerUser = async (req, res) => {
     });
 
     // Send token as a cookie to the user
-    res.cookie("kulboard", token, {
+    res.cookie("kulb", token, {
       httpOnly: true,
       maxAge: maxAge * 1000,
     });
@@ -94,7 +94,7 @@ const loginUser = async (req, res) => {
       });
 
       // Send this token as a cookie to the user
-      res.cookie("kulboard", token, {
+      res.cookie("kulb", token, {
         httpOnly: true,
         maxAge: maxAge * 1000,
       });
