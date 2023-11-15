@@ -25,9 +25,10 @@ function TaskCard({task}){
         setViewDetails(false);
     }
 
-    const handleEdit = () => {
+    const handleEdit = (event) => {
         // link to edit form
-        
+        event.preventDefault()
+        window.location.href = `/board/${task.board_id}/${task.task_date}/${task.task_id}`
     }
 
     const handleDelete = () => {
