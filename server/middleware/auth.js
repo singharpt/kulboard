@@ -1,15 +1,17 @@
 import jwt from "jsonwebtoken";
+import { pool } from "../config/database.js";
 
 const middlewareAuthentication = async (req, res, next) => {
-  const token = req.cookies.jwt;
-  if (!token) {
-    return res.status(403).send("A token is required for authentication");
-  }
   try {
+    const token = req.cookies.kulb;
+    console.log(token);
+    if (!token) {
+      return res.status(403).send("A token is required for authentication");
+    }
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     try {
       const results = await pool.query(
-        `SELECT * FROM users WHERE users.email = ${1}`,
+        `SELECT * FROM users WHERE users.email = $1`,
         [decoded.email]
       );
       if (results.rows.length < 1) {
@@ -21,7 +23,7 @@ const middlewareAuthentication = async (req, res, next) => {
 
     next();
   } catch (err) {
-    return res.status(401).send("Invalid Token");
+    return res.status(401).send("Invalid Token " + err.message);
   }
 };
 
