@@ -65,15 +65,15 @@ function Login() {
     setEmailBtnVisible(false);
     console.log(data);
     if ("name" in data) {
-      console.log("register");
+      // console.log("register");
       const response = await registerUser(data);
       setUser(response);
-      console.log(response);
+      // console.log(response);
     } else {
-      console.log("login");
+      // console.log("login");
       const response = await loginUser(data);
       setUser(response);
-      console.log(response);
+      // console.log(response);
     }
     reset();
     navigate("/", { replace: true });

@@ -20,8 +20,7 @@ function BoardBlocks(props) {
             flexDirection: "column",
           }}
         >
-          <h3>Board Name: {item?.boardname}</h3>
-          <p>Member1: {item?.boardmember1}</p>
+          <h3>Board Name: {item?.board_name}</h3>
         </div>
       ))}
     </div>
