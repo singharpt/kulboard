@@ -5,8 +5,8 @@ const getTasksByDate = (board_id, date) => axios.get(`http://localhost:3000/api/
 
 const getTaskById = (task_id) => axios.get(`http://localhost:3000/api/task/${task_id}`)
 const createTask = () => axios.post('/api/tasks')
-const updateTask = (task_id) => axios.patch(`http://localhost:3000/api/tasks/${task_id}`)               
-const deleteTask = (task_id) => axios.delete(`/api/tasks/${task_id}`)
+const updateTask = (task_id, task) => axios.patch(`http://localhost:3000/api/task/${task_id}`, task)               
+const deleteTask = (task_id) => axios.delete(`http://localhost:3000/api/task/${task_id}`)
 
 export default{
     // tasksByBoard: getTasksByBoard,

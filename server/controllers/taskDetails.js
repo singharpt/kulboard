@@ -59,15 +59,25 @@ const createTask = async (req, res) => {
   // update a task
   const updateTask = async (req, res) => {
     try {
-        const task_id = req.params.id
+      console.log("inside update task controller")
+      const task_id = req.params.task_id
       const { board, assignee, description, priority, status, start_time, end_time, date } = req.body
+      console.log(board)
+      console.log(assignee)
+      console.log(description)
+      console.log(priority)
+      console.log(status)
+      console.log(start_time)
+      console.log(end_time)
+      console.log(date)
+      console.log(task_id)
       const results = await pool.query(
         `UPDATE tasks 
-        SET board_id = $1, assignee_id = $2, task_description = $3, task_priority = $4, task_status = $5, task_start_time = $6, task_end_time = $7, task_date = $8 
+        SET board_id = $1, task_assignee_id = $2, task_description = $3, task_priority = $4, task_status = $5, task_start_time = $6, task_end_time = $7, task_date = $8 
         WHERE task_id = $9`,
          [board, assignee, description, priority, status, start_time, end_time, date, task_id]
         )
-      res.status(200).json(results.rows) 
+      res.status(201).json(results.rows) 
     } catch (error) {
       res.status(400).json( { error: error.message } )
     }
