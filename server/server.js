@@ -29,18 +29,18 @@ if (process.env.NODE_ENV === "development") {
 //add to parse the cookies
 app.use(cookieParser());
 
-// specify the api path for the server to use
-app.use("/api", userDetailsRouter);
-app.use("/api", boardDetailsRouter);
-app.use("/api", authenticationRouter);
-app.use("/api", taskDetailsRouter);
-
 // add functionality to restrict backend connection only to front-end post 5173
 const corsOptions = {
   origin: "http://localhost:5173",
   credentials: true,
 };
 app.use(cors(corsOptions));
+
+// specify the api path for the server to use
+app.use("/api", userDetailsRouter);
+app.use("/api", boardDetailsRouter);
+app.use("/api", authenticationRouter);
+app.use("/api", taskDetailsRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.get("/*", (_, res) => res.sendFile(path.resolve("public", "index.html")));

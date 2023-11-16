@@ -19,5 +19,30 @@ router.get(
   middlewareAuthentication,
   BoardDetailsController.getTasksByBoardId
 );
+router.get(
+  "/board/user/member/:board_member_id",
+  middlewareAuthentication,
+  BoardDetailsController.getBoardsByMemberId
+);
+router.get(
+  "/board/user/owner/:board_owner_id",
+  middlewareAuthentication,
+  BoardDetailsController.getBoardsByOwnerId
+);
+router.get(
+  "/board",
+  middlewareAuthentication,
+  BoardDetailsController.getAllBoards
+);
+router.post(
+  "/board/add",
+  middlewareAuthentication,
+  BoardDetailsController.addNewBoard
+);
+router.patch(
+  "/board/add/member",
+  middlewareAuthentication,
+  BoardDetailsController.addBoardMembers
+);
 
 export default router;
