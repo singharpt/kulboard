@@ -43,8 +43,6 @@ app.use("/api", boardDetailsRouter);
 app.use("/api", authenticationRouter);
 app.use("/api", taskDetailsRouter);
 
-
-
 if (process.env.NODE_ENV === "production") {
   app.get("/*", (_, res) => res.sendFile(path.resolve("public", "index.html")));
 }

@@ -2,7 +2,7 @@ import useFetch from "../utilities/useFetch";
 
 const loginUser = async (data) => {
   const request = {
-    URL: "http://localhost:3000/login",
+    URL: "http://localhost:3000/api/login",
     METHOD: "POST",
     BODY: {
       email: data.email,
@@ -19,7 +19,7 @@ const loginUser = async (data) => {
     return response;
   } else {
     console.error("Login Failed:", response);
-    return response;
+    return {};
   }
 };
 

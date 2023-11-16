@@ -1,6 +1,4 @@
-import boardsInfo from "../dummydata/boardsData";
-
-function BoardBlocks() {
+function BoardBlocks(props) {
   return (
     <div
       style={{
@@ -9,8 +7,9 @@ function BoardBlocks() {
         justifyContent: "space-around",
       }}
     >
-      {boardsInfo.map((item) => (
+      {props.boards_data.map((item) => (
         <div
+          key={Math.random() * 10000000}
           style={{
             border: "1px solid #ccc",
             borderRadius: "8px",
