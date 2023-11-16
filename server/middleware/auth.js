@@ -4,7 +4,6 @@ import { pool } from "../config/database.js";
 const middlewareAuthentication = async (req, res, next) => {
   try {
     const token = req.cookies.kulb;
-    console.log(token);
     if (!token) {
       return res.status(403).send("A token is required for authentication");
     }
