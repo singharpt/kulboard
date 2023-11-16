@@ -18,7 +18,8 @@ const getTasksByDate = async (req, res) => {
     const date = req.params.date
     console.log(date)
     try {
-      const results = await pool.query(`SELECT * FROM tasks WHERE task_date = ${date} AND board_id = ${board_id}`)
+      const results = await pool.query('SELECT * FROM tasks WHERE task_date = $1 AND board_id = $2',
+      [date, board_id])
       res.status(200).json(results.rows)
       console.log("query worked")
     } catch (error) {
@@ -30,7 +31,7 @@ const getTasksByDate = async (req, res) => {
 
 // get task by id
 const getTaskById = async (req, res) => {
-    const task_id = req.params.id
+    const task_id = req.params.task_id
     try {
       const results = await pool.query(`SELECT * FROM tasks WHERE task_id = ${task_id}`)
       res.status(200).json(results.rows)
