@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 import validateUser from "../services/validateUser";
 import loginUser from "../services/loginUser";
 import registerUser from "../services/registerUser";
+import { MyContext } from "../components/ContextProvider";
 
 function Login() {
   const navigate = useNavigate();
+  const { user, setUser } = useContext(MyContext);
   const [emailTyped, setEmailTyped] = useState("");
   const [isNewAttempt, setNewAttempt] = useState(true);
   const [isRegisteredUser, setRegisteredUser] = useState(false);
@@ -65,10 +67,12 @@ function Login() {
     if ("name" in data) {
       console.log("register");
       const response = await registerUser(data);
+      setUser(response);
       console.log(response);
     } else {
       console.log("login");
       const response = await loginUser(data);
+      setUser(response);
       console.log(response);
     }
     reset();
