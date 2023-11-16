@@ -26,8 +26,6 @@ if (process.env.NODE_ENV === "development") {
   app.use(express.static("public"));
 }
 
-//add to parse the cookies
-app.use(cookieParser());
 
 // add functionality to restrict backend connection only to front-end post 5173
 const corsOptions = {
@@ -35,6 +33,9 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
+
+//add to parse the cookies
+app.use(cookieParser());
 
 // specify the api path for the server to use
 app.use("/api", userDetailsRouter);
