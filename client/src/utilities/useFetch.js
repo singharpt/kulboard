@@ -2,8 +2,8 @@ import axios from "axios";
 const useFetch = async (request) => {
   try {
     if (request.METHOD === "GET") {
-      const response = await axios.get(URL);
-      return response.data; // Assuming you want to return the data portion of the response
+      const response = await axios.get(request.URL, { withCredentials: true });
+      return response;
     }
 
     if (request.METHOD === "POST") {
