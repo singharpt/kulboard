@@ -10,6 +10,11 @@ router.get(
   BoardDetailsController.getBoardByBoardId
 );
 router.get(
+  "/board/name/:board_name",
+  middlewareAuthentication,
+  BoardDetailsController.getBoardByBoardName
+);
+router.get(
   "/board/users/:board_id",
   middlewareAuthentication,
   BoardDetailsController.getUsersByBoardId
@@ -39,7 +44,7 @@ router.post(
   middlewareAuthentication,
   BoardDetailsController.addNewBoard
 );
-router.patch(
+router.post(
   "/board/add/member",
   middlewareAuthentication,
   BoardDetailsController.addBoardMembers

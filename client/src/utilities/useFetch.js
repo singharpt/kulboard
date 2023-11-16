@@ -7,8 +7,13 @@ const useFetch = async (request) => {
     }
 
     if (request.METHOD === "POST") {
-      const response = await axios.post(request.URL, request.BODY);
-      return response.data;
+      const response = await axios.post(request.URL, request.BODY, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        return response.data;
+      }
+      return response;
     }
 
     if (request.METHOD === "PATCH" || METHOD === "PUT") {

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import boardsInfo from "../dummydata/boardsData";
+import { MyContext } from "../components/ContextProvider";
+import addNewBoard from "../services/addNewBoard";
 
 function BoardsPopUp(props) {
-  console.log("board mounted");
-  const display = props.displayPopUp;
-  const [memberCount, setMemberCount] = useState([]);
+  const { user, setUser } = useContext(MyContext);
+  const set_display_boards_pop_up = props.displayPopUp;
   const schema = yup.object().shape({
     boardname: yup.string().required("Board name is required!"),
   });
@@ -21,13 +21,14 @@ function BoardsPopUp(props) {
   } = useForm({ resolver: yupResolver(schema) });
 
   // The submit function called inside handleSubmit state method
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-    boardsInfo.push(data);
-    display(false);
-    reset();
-    console.log(boardsInfo);
-    console.log("board un-mounted");
+    const response = await addNewBoard(data.boardname, user.user_id);
+    console.log(response);
+    if (!response?.status) {
+      set_display_boards_pop_up(false);
+      reset();
+    }
   };
 
   return (
@@ -49,31 +50,6 @@ function BoardsPopUp(props) {
         />
         <p style={{ color: "red" }}>{errors.boardname?.message}</p>
       </div>
-      {memberCount.map((count) => (
-        <div key={"boardmember" + count}>
-          <input
-            type="text"
-            placeholder={`Enter member ${count} email`}
-            {...register("boardmember" + count)}
-            style={{ fontSize: "20px", padding: "15px", margin: "15px" }}
-          />
-        </div>
-      ))}
-
-      <input
-        type="button"
-        value="Add Board Members"
-        onClick={() => setMemberCount((prev) => [...prev, prev.length + 1])}
-        style={{
-          display: "inherit",
-          fontSize: "20px",
-          padding: "15px",
-          width: "242px",
-          margin: "12px",
-          marginLeft: "15px",
-        }}
-      ></input>
-
       <input
         type="submit"
         style={{
