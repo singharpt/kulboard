@@ -1,7 +1,8 @@
 import React from 'react'
 import '../App.css'
 import ReactModal from 'react-modal';
-import { useState} from "react";
+import { useState, useEffect} from "react";
+import UserDetailsAPI from "../services/userDetails.js"
 
 // need to replace 'assigned to' with user's name
 
@@ -16,6 +17,8 @@ function TaskCard({task}){
     //content: {maxWidth:'500px', maxHeight: '500px', top:'50%', left:'50%', transform: 'translate(-50%, -50%)', borderRadius:'5px', backgroundColor:'#a3b18a'}}}
     
     const [viewDetails, setViewDetails] = useState(false)
+    const [creator, setCreator] = useState([])
+    const [assignee, setAssignee] = useState([])
 
     const openModal = () => {
         setViewDetails(true);
@@ -35,10 +38,33 @@ function TaskCard({task}){
         // add api call for deleting a task
     }
 
+    useEffect(() => {
+        
+        (async () => {
+            // set assignee details
+            try {
+                const data = await UserDetailsAPI.getUserById(task.task_assignee_id)
+                //console.log(data.data)
+                setAssignee(data.data)                
+            } catch (error) {
+                throw error
+            }
+
+            // set creator details
+            try {
+                const data = await UserDetailsAPI.getUserById(task.task_creator_id)
+                //console.log(data.data)
+                setCreator(data.data)                
+            } catch (error) {
+                throw error
+            }
+        }) ();
+    }, [])
+
     return (
         <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '15px', marginBottom: '10px' }}>
             <div>
-                <h2>Assigned to: {task.task_assignee_id}</h2>
+                <h2>Assigned to: {assignee && assignee.length > 0 ? assignee[0].name : null}</h2>
                 <p>Status: {task.task_status}</p>
                 <p>Description: {task.task_description}</p>
                 <button onClick={openModal}> View Details </button>
@@ -49,10 +75,11 @@ function TaskCard({task}){
                                      content: {maxWidth:'500px', maxHeight: '500px', top:'50%', left:'50%', display: 'flex', justifyContent: 'center', alignItems: 'center', transform: 'translate(-50%, -50%)', borderRadius:'5px'}}}>
                             <div>
                                 <h2>View Details</h2>
-                                <p>Assigned by: {task.task_creator_id}</p>
+                                <p>Assigned by: {creator && creator.length > 0 ? creator[0].name : null}</p>
                                 <p>Start time: {task.task_start_time}</p>
                                 <p>End time: {task.task_end_time}</p>
                                 <p>Status: {task.task_status}</p>
+                                <p>Priority: {task.task_priority}</p>
                                 <p>Description: {task.task_description}</p>
                                 <button onClick={closeModal}>Close Details</button>
                                 <button onClick={handleEdit}>Edit task</button>

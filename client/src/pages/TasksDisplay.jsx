@@ -38,7 +38,7 @@ function TasksDisplay (){
 
     return(
         <div>
-            <button onClick={addTask}>Add Task</button>
+            {/* <button onClick={addTask}>Add Task</button> */}
             {
                 tasks && tasks.length > 0 ? tasks.map((task) => 
                     <TaskCard key={task.id} task={task} /> 
