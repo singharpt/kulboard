@@ -18,31 +18,31 @@ Our team's inspiration for this project arises from a shared understanding of th
 
 ## Tech Stack
 
-Frontend: React.js, HTML/CSS
+Frontend: React.js, HTML/CSS, Tailwind CSS, Material UI, Full Calendar
 
-Backend: Express.js, Node.js, Postgres
+Backend: Express.js, Node.js, PostgreSQL, JSON web token, Railway, REST APIs
 
 ## Features
 
-### User Profiles
+### ✅ Task Updates
 
-Each family member creates their own profile within the app, allowing them to personalize their settings and manage their responsibilities.
-
-[gif goes here]
-
-### Task Management
-
-Users can add, edit, and delete tasks, specifying details such as task name, description, deadline, and any special requirements. Tasks can be categorized by type (e.g., household chores, childcare, work-related).
+Users can update a task's details and specify its current status, informing other board members of task progress.
 
 [gif goes here]
 
-### Monthly/Daily Task Views
+### ✅ Task Creation/Deletion
 
-Users can view tasks in different calendar formats as well as filter tasks based on board members to see who is assigned with which tasks.
+Users can add and delete tasks, specifying details such as task name, description, deadline, and any special requirements. 
 
 [gif goes here]
 
-### ✅ Family Board Creation/Deletion
+### ✅ Monthly/Daily Task Views
+
+Users can view tasks in different calendar formats. The daily task view displays all tasks associated with that day.
+
+[gif goes here]
+
+### ✅ Family Board Creation
 
 Owners have the ability to create and customize family boards, setting the foundation for family-wide task management.
 
@@ -50,18 +50,27 @@ Owners have the ability to create and customize family boards, setting the found
 
 ### ✅ Login/Sign Up 
 
-Users can sign up for the first time or login to a personalized page if an account already exists
+Users can sign up for the first time or login to a personalized page if an account already exists.
 
 <img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/login%20feature.gif' title='Existing User Login' width='' alt='Video Walkthrough' />
 
 <img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/sign%20up%20feature.gif' title='New User Sign Up' width='' alt='Video Walkthrough' />
 
-### Search Functionality
+### ✅ Family Member Management
 
-Users can search for specific tasks, family members, or previous task history within the family board.
+Board Owners can add family members with a Kulboard account to their board. Together, members can add, edit, and delete, and assign tasks to other members with shared boards.
 
 [gif goes here]
 
 ## Installation Instructions
 
-[instructions go here]
+1. Clone repo: https://github.com/ManyaBondada/web103_finalproject.git
+2. cd server --> npm install
+3. cd client --> npm install
+4. Create railway Postgres database
+6. Create .env with the following variables from Railway: PGUSER, PGPASSWORD, PGHOST, PGPORT, PGDATABASE
+7. In the .env file, include the final variable, JWT_SECRET_KEY. Use the following command in terminal to generate the secret key: openssl rand -hex 32
+8. Place the .env file inside the server directory
+9. cd server --> npm run reset
+10. cd server --> npm start
+11. cd client --> npm run dev
