@@ -83,23 +83,25 @@ Users can update a task's details and specify its current status, informing othe
    npm install
 4. **Create Postgres database in Railway**
 5. **Create .env file with the following variables from Railway**
-    ```bash
-    // Make sure the .env file is in the server directory
+
+   Make sure the .env file is in the server directory
+   ```bash
     PGUSER=your_pg_user
     PGPASSWORD=your_pg_password
     PGHOST=your_pg_host
     PGPORT=your_pg_port
     PGDATABASE=your_pg_database
-6. **Add JWT Secret Key to .env**
-   ```bash
-   // Generate the secret key using the following command in terminal
-   openssl rand -hex 32
-7. **Reset the database and run server**
+7. **Add JWT Secret Key to .env**
+
+   Generate the secret key using the following command in terminal
+    ```bash
+     openssl rand -hex 32
+8. **Reset the database and run server**
     ```bash
     cd server
     npm run reset
     npm start
-8. **Run the client**
+9. **Run the client**
    ```bash
    cd client
    npm run dev
