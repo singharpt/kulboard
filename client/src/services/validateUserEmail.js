@@ -2,7 +2,7 @@ import useFetch from "../utilities/useFetch";
 
 const validateUser = async (email) => {
   const request = {
-    URL: "http://localhost:3000/api/checkUser",
+    URL: "http://localhost:3000/api/checkUserEmail",
     METHOD: "POST",
     BODY: { email },
     HEADERS: {

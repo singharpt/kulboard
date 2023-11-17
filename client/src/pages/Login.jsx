@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import validateUser from "../services/validateUser";
+import validateUser from "../services/validateUserEmail";
 import loginUser from "../services/loginUser";
 import registerUser from "../services/registerUser";
 import { MyContext } from "../components/ContextProvider";

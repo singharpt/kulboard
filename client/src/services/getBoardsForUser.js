@@ -22,8 +22,8 @@ const boards_user_is_member = async (member_id) => {
   };
 
   const response = await useFetch(request);
-  //console.log(response);
-  if (response && response.length > 0) {
+  console.log(response);
+  if (response.data.length > 0) {
     return response.data;
   } else {
     console.error("No data available", response);

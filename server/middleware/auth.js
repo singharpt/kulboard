@@ -16,10 +16,10 @@ const middlewareAuthentication = async (req, res, next) => {
       if (results.rows.length < 1) {
         return res.status(401).send("Invalid Token");
       }
+      req.user = results.rows;
     } catch (err) {
       return res.status(400).send(err.message);
     }
-
     next();
   } catch (err) {
     return res.status(401).send("Invalid Token " + err.message);
