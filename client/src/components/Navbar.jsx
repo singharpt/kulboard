@@ -41,9 +41,9 @@ function Navbar() {
         <Button onClick={() => navigate("/")} sx={{ my: 1, mx: 1.5 }}>
           HOME
         </Button>
-        <Button onClick={() => navigate("/calendar")} sx={{ my: 1, mx: 1.5 }}>
+        {/* <Button onClick={() => navigate("/calendar")} sx={{ my: 1, mx: 1.5 }}>
           CALENDAR
-        </Button>
+        </Button> */}
         <Button
           onClick={handleAuthentication}
           variant="outlined"

@@ -1,9 +1,6 @@
 import React from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-// import "@fullcalendar/core/main.css";
-// import "@fullcalendar/daygrid/main.css";
-// import "./CalendarView.css"; // Create a separate CSS file for styling
 
 const CalendarView = () => {
   function renderEventContent(eventInfo) {
