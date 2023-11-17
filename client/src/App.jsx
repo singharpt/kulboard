@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import TasksDisplay from "./pages/TasksDisplay";
 import EditTask from "./pages/EditTask"
+import CreateTask from "./pages/CreateTask"
 // import Navbar from "./components/Navbar";
 // import CreateBoard from "./pages/CreateBoard";
 
@@ -25,6 +26,10 @@ const App = () => {
     {
       path: "/board/:board/:date/:task_id",
       element: <EditTask />,
+    },
+    {
+      path: "/board/:board/:date/create",
+      element: <CreateTask />,
     }
     // {
     //   path: "/createboard",
