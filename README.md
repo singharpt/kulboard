@@ -70,13 +70,36 @@ Users can update a task's details and specify its current status, informing othe
 
 ## Installation Instructions
 
-1. Clone repo: https://github.com/ManyaBondada/web103_finalproject.git
-2. cd server --> npm install
-3. cd client --> npm install
-4. Create railway Postgres database
-6. Create .env with the following variables from Railway: PGUSER, PGPASSWORD, PGHOST, PGPORT, PGDATABASE
-7. In the .env file, include the final variable, JWT_SECRET_KEY. Use the following command in terminal to generate the secret key: openssl rand -hex 32
-8. Place the .env file inside the server directory
-9. cd server --> npm run reset
-10. cd server --> npm start
-11. cd client --> npm run dev
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/ManyaBondada/web103_finalproject.git
+2. **Install server dependencies**
+   ```bash
+   cd server
+   npm install
+3. **Install client dependencies**
+   ```bash
+   cd client
+   npm install
+4. **Create Postgres database in Railway**
+5. **Create .env file with the following variables from Railway**
+   Make sure the .env file is in the server directory
+    ```bash
+    PGUSER=your_pg_user
+    PGPASSWORD=your_pg_password
+    PGHOST=your_pg_host
+    PGPORT=your_pg_port
+    PGDATABASE=your_pg_database
+6. **Add JWT Secret Key to .env**
+    Generate the secret key using the following command in terminal
+   ```bash
+   openssl rand -hex 32
+7. **Reset the database and run server**
+    ```bash
+    cd server
+    npm run reset
+    npm start
+8. **Run the client**
+   ```bash
+   cd client
+   npm run dev
