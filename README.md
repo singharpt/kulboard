@@ -28,39 +28,39 @@ Backend: Express.js, Node.js, PostgreSQL, JSON web token, Railway, REST APIs
 
 Users can update a task's details and specify its current status, informing other board members of task progress.
 
-[gif goes here]
+<img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/feature%20GIFS/task%20update%20feature.gif' title='Task Updates' width='' alt='Video Walkthrough' />
 
 ### ✅ Task Creation/Deletion
 
-Users can add and delete tasks, specifying details such as task name, description, deadline, and any special requirements. 
+<img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/feature%20GIFS/task%20creation%20feature.gif' title='Task Creation' width='' alt='Video Walkthrough' />
 
-[gif goes here]
+<img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/feature%20GIFS/task%20delete%20feature.gif' title='Task Deletion' width='' alt='Video Walkthrough' />
 
 ### ✅ Monthly/Daily Task Views
 
 Users can view tasks in different calendar formats. The daily task view displays all tasks associated with that day.
 
-[gif goes here]
+<img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/feature%20GIFS/monthly%20daily%20views%20feature.gif' title='Task Views' width='' alt='Video Walkthrough' />
 
 ### ✅ Family Board Creation
 
 Owners have the ability to create and customize family boards, setting the foundation for family-wide task management.
 
-<img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/create%20board%20feature.gif' title='Board Creation' width='' alt='Video Walkthrough' />
+<img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/feature%20GIFS/create%20board%20feature.gif' title='Board Creation' width='' alt='Video Walkthrough' />
 
 ### ✅ Login/Sign Up 
 
 Users can sign up for the first time or login to a personalized page if an account already exists.
 
-<img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/login%20feature.gif' title='Existing User Login' width='' alt='Video Walkthrough' />
+<img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/feature%20GIFS/login%20feature.gif' title='Existing User Login' width='' alt='Video Walkthrough' />
 
-<img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/sign%20up%20feature.gif' title='New User Sign Up' width='' alt='Video Walkthrough' />
+<img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/feature%20GIFS/sign%20up%20feature.gif' title='New User Sign Up' width='' alt='Video Walkthrough' />
 
 ### ✅ Family Member Management
 
 Board Owners can add family members with a Kulboard account to their board. Together, members can add, edit, and delete, and assign tasks to other members with shared boards.
 
-[gif goes here]
+<img src='https://github.com/ManyaBondada/web103_finalproject/blob/main/feature%20GIFS/board%20management%20feature.gif' title='Member Management' width='' alt='Video Walkthrough' />
 
 ## Installation Instructions
 
