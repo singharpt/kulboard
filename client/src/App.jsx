@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import TasksDisplay from "./pages/TasksDisplay";
 import EditTask from "./pages/EditTask";
 import Navbar from "./components/Navbar";
-// import CreateBoard from "./pages/CreateBoard";
+import CalendarView from "./pages/CalendarView";
 
 const App = () => {
   const element = useRoutes([
@@ -20,6 +20,15 @@ const App = () => {
         <>
           <Navbar />
           <Home />
+        </>
+      ),
+    },
+    {
+      path: "/calendar",
+      element: (
+        <>
+          <Navbar />
+          <CalendarView />
         </>
       ),
     },
