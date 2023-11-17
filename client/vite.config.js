@@ -11,6 +11,7 @@ export default defineConfig({
   resolve: {
     alias: {
       picocss: path.resolve(__dirname, "../node_modules/@picocss/pico/css"),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
 });

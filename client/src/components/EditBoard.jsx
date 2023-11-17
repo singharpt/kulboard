@@ -3,15 +3,20 @@ import { MyContext } from "../components/ContextProvider";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import get_all_users from "../services/getAllUsers";
+import Button from "@mui/material/Button";
 
-function EditBoards() {
+function EditBoards(props) {
   const { user, setUser } = useContext(MyContext);
   const [allusers, setUsers] = useState([{ email: "dummy" }]);
 
   const getAllUsers = async () => {
     const response = await get_all_users();
-    console.log(response);
     setUsers(response);
+  };
+
+  const editMembers = (event, value) => {
+    console.log(value);
+    // You can perform additional logic here to handle edited members
   };
 
   useEffect(() => {
@@ -19,16 +24,26 @@ function EditBoards() {
   }, []);
 
   return (
-    <Autocomplete
-      multiple
-      id="multiple-limit-tags"
-      options={allusers}
-      getOptionLabel={(option) => option.email}
-      renderInput={(params) => (
-        <TextField {...params} placeholder="Board Members" />
-      )}
-      sx={{ width: "500px" }}
-    />
+    <div>
+      <Autocomplete
+        multiple
+        id="multiple-limit-tags"
+        options={allusers}
+        onChange={editMembers}
+        getOptionLabel={(option) => option.email}
+        renderInput={(params) => (
+          <TextField {...params} label="Board Members" />
+        )}
+        sx={{ width: "100%" }}
+      />
+      <Button
+        variant="outlined"
+        onClick={props.onDoneEditing}
+        style={{ marginTop: "10px" }}
+      >
+        DONE
+      </Button>
+    </div>
   );
 }
 

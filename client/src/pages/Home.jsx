@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import BoardsPopUp from "../components/BoardPopUp";
 import BoardBlocks from "../components/BoardBlocks";
 import getBoardsForUser from "../services/getBoardsForUser";
 import { MyContext } from "../components/ContextProvider";
-import EditBoards from "../components/EditBoard";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 
 function Home() {
   const [showBoardsPopUp, setBoardsPopUp] = useState(false);
@@ -16,10 +16,9 @@ function Home() {
   const navigate = useNavigate();
 
   const getUserBoards = async () => {
-    //console.log(user, !("user_id" in user));
-    if (!("user_id" in user)) {
-      navigate("/login", { replace: true });
-    } else {
+    await user;
+    console.log(user, !("user_id" in user));
+    if ("user_id" in user) {
       const owner_boards_response = await getBoardsForUser.boards_user_is_owner(
         user.user_id
       );
@@ -41,22 +40,59 @@ function Home() {
 
   return (
     <>
-      <Navbar displayPopUp={setBoardsPopUp} />
       {showBoardsPopUp && <BoardsPopUp displayPopUp={setBoardsPopUp} />}
       {!showBoardsPopUp &&
         ownerBoards.length === 0 &&
         memberBoards.length === 0 && (
           <>
-            <div style={{ fontSize: "100px" }}>This is the Home Page</div>
+            <div style={{ fontSize: "50px" }}>
+              Login to your account to access boards
+            </div>
           </>
         )}
-      {!showBoardsPopUp && ownerBoards.length > 0 && (
-        <BoardBlocks boards_data={ownerBoards} />
-      )}
-      {!showBoardsPopUp && memberBoards.length > 0 && (
-        <BoardBlocks boards_data={memberBoards} />
-      )}
-      <EditBoards />
+      {!showBoardsPopUp &&
+        (ownerBoards.length > 0 || memberBoards.length > 0) && (
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            {ownerBoards.length > 0 && (
+              <div style={{ flex: 1, paddingRight: "16px" }}>
+                <div
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                    marginBottom: "8px",
+                  }}
+                >
+                  OWNER BOARDS
+                  <Button
+                    variant="outlined"
+                    onClick={() => setBoardsPopUp(true)}
+                    style={{ marginLeft: "8px" }}
+                  >
+                    Add Board
+                  </Button>
+                </div>
+                <BoardBlocks boards_data={ownerBoards} authorization={true} />
+              </div>
+            )}
+            {ownerBoards.length > 0 && memberBoards.length > 0 && (
+              <Divider orientation="vertical" flexItem />
+            )}
+            {memberBoards.length > 0 && (
+              <div style={{ flex: 1, paddingLeft: "16px" }}>
+                <div
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                    marginBottom: "8px",
+                  }}
+                >
+                  MEMBER BOARDS
+                </div>
+                <BoardBlocks boards_data={memberBoards} authorization={false} />
+              </div>
+            )}
+          </div>
+        )}
     </>
   );
 }
