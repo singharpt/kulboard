@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get(
   "/board/:board_id",
-  middlewareAuthentication,
+  // middlewareAuthentication,
   BoardDetailsController.getBoardByBoardId
 );
 router.get(
@@ -16,7 +16,7 @@ router.get(
 );
 router.get(
   "/board/users/:board_id",
-  middlewareAuthentication,
+  // middlewareAuthentication,
   BoardDetailsController.getUsersByBoardId
 );
 router.get(

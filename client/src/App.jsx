@@ -37,15 +37,30 @@ const App = () => {
     },
     {
       path: "/board/:board/:date",
-      element: <TasksDisplay />,
+      element: (
+        <>
+          <Navbar />
+          <TasksDisplay />
+        </>
+      ),
     },
     {
       path: "/board/:board/:date/:task_id",
-      element: <EditTask />,
+      element: (
+        <>
+          <Navbar />
+          <EditTask />
+        </>
+      )
     },
     {
       path: "/board/:board/:date/create",
-      element: <CreateTask />,
+      element:(
+        <>
+          <Navbar />
+          <CreateTask />
+        </>
+      ) 
     }
     // {
     //   path: "/createboard",
