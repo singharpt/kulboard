@@ -4,9 +4,11 @@ import "./App.css";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import TasksDisplay from "./pages/TasksDisplay";
+
 import EditTask from "./pages/EditTask"
 import CreateTask from "./pages/CreateTask"
 // import Navbar from "./components/Navbar";
+
 // import CreateBoard from "./pages/CreateBoard";
 
 const App = () => {
@@ -17,7 +19,12 @@ const App = () => {
     },
     {
       path: "/",
-      element: <Home />,
+      element: (
+        <>
+          <Navbar />
+          <Home />
+        </>
+      ),
     },
     {
       path: "/board/:board/:date",
@@ -35,6 +42,7 @@ const App = () => {
     //   path: "/createboard",
     //   element: <CreateBoard />,
     // },
+
   ]);
   return <div className="app">{element}</div>;
 };

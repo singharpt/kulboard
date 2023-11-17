@@ -14,7 +14,7 @@ const loginUser = async (data) => {
   };
 
   const response = await useFetch(request);
-  console.log(response);
+  console.log("login response ", response);
   if (response.hasOwnProperty("name")) {
     return response;
   } else {

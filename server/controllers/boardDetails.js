@@ -16,6 +16,21 @@ const getBoardByBoardId = async (req, res) => {
   }
 };
 
+// get board information by board name
+const getBoardByBoardName = async (req, res) => {
+  try {
+    const id = req.params.board_name;
+    const selectQuery = `
+      SELECT boards.*
+      FROM boards
+      WHERE boards.board_name = $1`;
+    const results = await pool.query(selectQuery, [id]);
+    res.status(200).json(results.rows);
+  } catch (error) {
+    res.status(409).json({ error: error.message });
+  }
+};
+
 // get board associated users (all the users associated with a board)
 const getUsersByBoardId = async (req, res) => {
   try {
@@ -62,9 +77,11 @@ const getBoardsByMemberId = async (req, res) => {
   try {
     const id = req.params.board_member_id;
     const selectQuery = `
-      SELECT distinct board_id 
-      FROM board_members
-      WHERE board_members.board_member_id = ${id};
+      SELECT b.board_name, bm.board_id
+      FROM board_members bm
+      LEFT JOIN boards b
+      on bm.board_id = b.board_id
+      WHERE bm.board_member_id = ${id};
       `;
     const results = await pool.query(selectQuery);
     res.status(200).json(results.rows);
@@ -78,7 +95,7 @@ const getBoardsByOwnerId = async (req, res) => {
   try {
     const id = req.params.board_owner_id;
     const selectQuery = `
-      SELECT distinct board_id
+      SELECT *
         FROM boards
         WHERE boards.board_owner_id = ${id};
       `;
@@ -93,6 +110,17 @@ const getBoardsByOwnerId = async (req, res) => {
 const addNewBoard = async (req, res) => {
   try {
     const { board_name, board_owner_id } = req.body;
+    const board_name_result = await pool.query(
+      `SELECT * 
+        FROM boards 
+        WHERE board_name=$1`,
+      [board_name]
+    );
+
+    if (board_name_result.rows.length > 0) {
+      return res.status(400).json("board name already exists");
+    }
+
     const results = await pool.query(
       `INSERT INTO boards (board_owner_id, board_name) VALUES ($1, $2) RETURNING *`,
       [board_owner_id, board_name]
@@ -103,14 +131,15 @@ const addNewBoard = async (req, res) => {
   }
 };
 
-// add member to an existing board
-const addBoardMembers = async (req, res) => {
+// add member to an existing board by member email
+const addBoardMembersByMemberEmail = async (req, res) => {
   try {
-    const { board_id, board_member_id } = req.body;
+    const { board_id, board_member_email } = req.body;
     const user = await pool.query(
       `SELECT user_id
         FROM users
-        WHERE users.user_id=${board_member_id}`
+        WHERE users.email=$1`,
+      [board_member_email]
     );
     // console.log(user.rows[0]?.user_id);
     if (user.rows.length < 1) {
@@ -122,6 +151,20 @@ const addBoardMembers = async (req, res) => {
     );
     res.status(200).json(results.rows);
     // res.status(200).json(user.rows[0]?.user_id);
+  } catch (error) {
+    res.status(409).json({ error: error.message });
+  }
+};
+
+// add member to an existing board by member id
+const addBoardMembersByMemberId = async (req, res) => {
+  try {
+    const { board_id, board_member_id } = req.body;
+    const results = await pool.query(
+      `INSERT INTO board_members (board_member_id, board_id) VALUES ($1, $2) RETURNING *`,
+      [board_member_id, board_id]
+    );
+    res.status(200).json(results.rows);
   } catch (error) {
     res.status(409).json({ error: error.message });
   }
@@ -139,18 +182,33 @@ const getAllBoards = async (req, res) => {
 };
 
 // delete member from the board
+const deleteBoardMembersByMemberId = async (req, res) => {
+  try {
+    const { board_id, board_member_id } = req.body;
+    const results = await pool.query(
+      `DELETE FROM board_members WHERE board_member_id = $1 AND board_id = $2 RETURNING *`,
+      [board_member_id, board_id]
+    );
+    res.status(200).json(results.rows);
+  } catch (error) {
+    res.status(409).json({ error: error.message });
+  }
+};
 
 // delete the board
 
 // edit the board details
 
 export default {
+  getBoardByBoardName,
   getBoardByBoardId,
   getUsersByBoardId,
   getTasksByBoardId,
   getBoardsByMemberId,
   getBoardsByOwnerId,
   addNewBoard,
-  addBoardMembers,
+  addBoardMembersByMemberId,
+  addBoardMembersByMemberEmail,
+  deleteBoardMembersByMemberId,
   getAllBoards,
 };

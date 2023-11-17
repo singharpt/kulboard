@@ -131,8 +131,21 @@ const userEmailExists = async (req, res) => {
   }
 };
 
+// return user details fetched by middleware
+const middleware_user_return = async (req, res) => {
+  res.status(200).json({ userdata: req.user });
+};
+
+// logout user
+const logout_user = async (req, res) => {
+  res.clearCookie("kulb", { path: "/" });
+  res.status(200).json({ message: "User logged out successfully" });
+};
+
 export default {
   userEmailExists,
   registerUser,
   loginUser,
+  middleware_user_return,
+  logout_user,
 };

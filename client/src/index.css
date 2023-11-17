@@ -68,3 +68,7 @@ button:focus-visible {
     margin: 10px;
   }
 }
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
