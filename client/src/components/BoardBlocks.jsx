@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import EditBoards from "../components/EditBoard";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { MyContext } from "../components/ContextProvider";
 
 function BoardBlocks(props) {
+  const { user, setUser } = useContext(MyContext);
   const [showEdit, setShowEdit] = useState(false);
   const [board, setBoard] = useState([]);
   const authorization_to_edit = props.authorization;
@@ -57,11 +58,21 @@ function BoardBlocks(props) {
           style={{
             border: "1px solid #ccc",
             borderRadius: "8px",
-            padding: "10px",
+            padding: "20px",
+            width: "300px",
+            margin: "40px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <CardContent>
-            <Typography variant="h6">{board?.board_name}</Typography>
+          <CardContent
+            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+          >
+            <Typography variant="h6" style={{ fontWeight: "700" }}>
+              {board?.board_name}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Owner: {user.email}
+            </Typography>
             <EditBoards board={board} onDoneEditing={handleDoneEditing} />
           </CardContent>
         </Card>

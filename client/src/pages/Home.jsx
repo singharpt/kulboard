@@ -6,6 +6,7 @@ import getBoardsForUser from "../services/getBoardsForUser";
 import { MyContext } from "../components/ContextProvider";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import AddIcon from "@mui/icons-material/Add";
 
 function Home() {
   const [showBoardsPopUp, setBoardsPopUp] = useState(false);
@@ -43,13 +44,28 @@ function Home() {
       {showBoardsPopUp && <BoardsPopUp displayPopUp={setBoardsPopUp} />}
       {!showBoardsPopUp &&
         ownerBoards.length === 0 &&
-        memberBoards.length === 0 && (
+        memberBoards.length === 0 &&
+        (user.hasOwnProperty("user_id") ? (
           <>
-            <div style={{ fontSize: "50px" }}>
-              Login to your account to access boards
-            </div>
+            <span style={{ fontSize: "50px" }}>Create your own family </span>
+            <button
+              onClick={() => setBoardsPopUp(true)}
+              style={{
+                fontSize: "50px",
+                borderStyle: "dashed",
+                padding: "5px",
+                marginLeft: "3px",
+                borderRadius: "5px",
+              }}
+            >
+              Board{" "}
+            </button>
           </>
-        )}
+        ) : (
+          <div style={{ fontSize: "50px" }}>
+            Login to your account to access boards
+          </div>
+        ))}
       {!showBoardsPopUp &&
         (ownerBoards.length > 0 || memberBoards.length > 0) && (
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -59,15 +75,16 @@ function Home() {
                   style={{
                     fontSize: "24px",
                     fontWeight: "bold",
-                    marginBottom: "8px",
+                    marginBottom: "16px",
                   }}
                 >
                   OWNER BOARDS
                   <Button
                     variant="outlined"
                     onClick={() => setBoardsPopUp(true)}
-                    style={{ marginLeft: "8px" }}
+                    style={{ marginLeft: "16px" }}
                   >
+                    <AddIcon />
                     Add Board
                   </Button>
                 </div>

@@ -45,9 +45,19 @@ router.post(
   BoardDetailsController.addNewBoard
 );
 router.post(
-  "/board/add/member",
+  "/board/add/memberId",
   middlewareAuthentication,
-  BoardDetailsController.addBoardMembers
+  BoardDetailsController.addBoardMembersByMemberId
+);
+router.post(
+  "/board/add/memberEmail",
+  middlewareAuthentication,
+  BoardDetailsController.addBoardMembersByMemberEmail
+);
+router.post(
+  "/board/remove/memberId",
+  middlewareAuthentication,
+  BoardDetailsController.deleteBoardMembersByMemberId
 );
 
 export default router;
