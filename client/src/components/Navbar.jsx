@@ -38,14 +38,12 @@ function Navbar() {
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
           WELCOME TO KUL'BOARD
         </Typography>
-        <nav>
-          <Button
-            onClick={() => (window.location.href = "/")}
-            sx={{ my: 1, mx: 1.5 }}
-          >
-            HOME
-          </Button>
-        </nav>
+        <Button onClick={() => navigate("/")} sx={{ my: 1, mx: 1.5 }}>
+          HOME
+        </Button>
+        <Button onClick={() => navigate("/calendar")} sx={{ my: 1, mx: 1.5 }}>
+          CALENDAR
+        </Button>
         <Button
           onClick={handleAuthentication}
           variant="outlined"
