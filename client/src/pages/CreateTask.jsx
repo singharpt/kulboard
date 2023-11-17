@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Link, useParams } from 'react-router-dom';
 import BoardDetailsAPI from "../services/boardDetails.js"
 import TaskDetailsAPI from "../services/taskDetails.js"
+import { MyContext } from "../components/ContextProvider";
+
 /*
 add task from date page
 default: set creator (from context provider), date (from url), board (from url) 
@@ -20,15 +22,16 @@ const CreateTask = () => {
     const [description, setDescription] = useState('')
     const [startTime, setStartTime] = useState('')
     // const [endTime, setEndTime] = useState('')
-
+    const { user, setUser } = useContext(MyContext);
+    
     const statusChoices = ['Pending', 'Completed']
     const priorityChoices = ['Red', 'Yellow', 'Green']
 
 
 
     useEffect(() => {
-        
         (async () => {
+            console.log(user.user_id)
             // get board info by id
             try {
                 const data = await BoardDetailsAPI.getBoardById(board)
@@ -99,7 +102,7 @@ const CreateTask = () => {
         console.log(date)
         const createdTask = {
             board: board,
-            creator: boardMembers[0].user_id, // random for now
+            creator: user.user_id,
             assignee: selectedAssignee[0].user_id,
             description: description,
             priority: priority,
