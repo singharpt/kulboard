@@ -40,7 +40,7 @@ function BoardBlocks(props) {
           {props.boards_data.map((item, index) => (
             <Card
               key={item?.board_id}
-              onClick={() => navigate("/calendar")}
+              onClick={() => navigate("/calendar", { state: item })}
               onMouseEnter={() => setIsHovered(index)}
               onMouseLeave={() => setIsHovered(null)}
               style={{
