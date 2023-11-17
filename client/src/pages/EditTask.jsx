@@ -8,19 +8,24 @@ const EditTask = () => {
 
     const{board, date, task_id} = useParams();
     const [selectedAssignee, setSelectedAssignee] = useState([])
-    const [creator, setCreator] = useState([])
+    // const [creator, setCreator] = useState([])
     const [boardInfo, setBoardInfo] = useState([])
     const [boardMembers, setBoardMembers] = useState([])
     const [status, setStatus] = useState('')
     const [priority, setPriority] = useState('')
     const [description, setDescription] = useState('')
     const [startTime, setStartTime] = useState('')
-    const [endTime, setEndTime] = useState('')
+    // const [endTime, setEndTime] = useState('')
     const [taskDate, setTaskDate] = useState('') // can simplify the number of vars later
     const [task, setTask] = useState({})
 
     const statusChoices = ['Pending', 'Completed']
     const priorityChoices = ['Red', 'Yellow', 'Green']
+
+    /*
+    NO end time
+    react date time picker for setting date and start time
+    */
 
     useEffect(() => {
         
@@ -33,7 +38,7 @@ const EditTask = () => {
                 setPriority(data.data[0].task_priority)
                 setDescription(data.data[0].task_description)
                 setStartTime(data.data[0].task_start_time)
-                setEndTime(data.data[0].task_end_time)
+                // setEndTime(data.data[0].task_end_time)
                 setTaskDate(data.data[0].task_date)
                 
                 const data2 = await UserDetailsAPI.getUserById(data.data[0].task_assignee_id)
@@ -63,13 +68,13 @@ const EditTask = () => {
             }
 
             // get task creator details
-            try {
-                const data = await UserDetailsAPI.getUserById(task[0].task_creator_id)
-                console.log(data.data)
-                setCreator(data.data)                
-            } catch (error) {
-                throw error
-            }
+            // try {
+            //     const data = await UserDetailsAPI.getUserById(task[0].task_creator_id)
+            //     console.log(data.data)
+            //     setCreator(data.data)                
+            // } catch (error) {
+            //     throw error
+            // }
         }) ();
 
     }, [])
@@ -81,6 +86,18 @@ const EditTask = () => {
     description, date, start time, end time are editable fields
     */
 
+    const handleDelete = async (event) => {
+        // add api call for deleting a task
+        event.preventDefault()
+        try {
+            await TaskDetailsAPI.delete(task_id)
+            console.log("task has been deleted")              
+        } catch (error) {
+            throw error
+        }
+        window.location = `/board/${board}/${date}`
+    }
+
     const handleOnSubmit = async (event) =>{
         event.preventDefault()
         // send task details through edit api
@@ -90,7 +107,7 @@ const EditTask = () => {
         console.log(priority)
         console.log(status)
         console.log(startTime)
-        console.log(endTime)
+        // console.log(endTime)
         console.log(taskDate)
         const updatedTask = {
             board: board,
@@ -99,7 +116,7 @@ const EditTask = () => {
             priority: priority,
             status: status,
             start_time: startTime,
-            end_time: endTime,
+            end_time: '1:00', // random for now
             date: taskDate
         }
 
@@ -115,9 +132,6 @@ const EditTask = () => {
           console.log("new assignee is")
           console.log(temp)
           setSelectedAssignee(temp);
-  
-        //   console.log("assignee is")
-        //   console.log(selectedAssignee)
         } 
         else if (name === 'status') {
             setStatus(value);
@@ -192,19 +206,19 @@ const EditTask = () => {
                         <input type='text' id='start_time' name='start_time' value={startTime} onChange={handleOnChange} />
                     </label>
 
-                    <label htmlFor='end_time'>
+                    {/* <label htmlFor='end_time'>
                         End Time
                         <input type='text' id='end_time' name='end_time' value={endTime} onChange={handleOnChange} />
-                    </label>
+                    </label> */}
 
                     <label htmlFor='date'>
                         Date
                         <input type='text' id='date' name='date' value={taskDate} onChange={handleOnChange} />
                     </label>
 
-                    {/* <button onClick={updateCreator}>Submit</button> */}
                     <div style={{ display: 'flex', flexDirection:'rows', padding: '15px', margin: '20px', justifyContent: 'center'}}>
                         <button type='submit'>Update</button>
+                        <button onClick={handleDelete}>Delete Task</button>
                         <Link to={`/board/${board}/${date}`}><button>Cancel</button></Link>
                     </div>
                 </div>

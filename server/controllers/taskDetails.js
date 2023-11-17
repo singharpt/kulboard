@@ -43,9 +43,10 @@ const getTaskById = async (req, res) => {
 // create new task
 const createTask = async (req, res) => {
     try {
+      console.log("inside create task controller")
       const { board, creator, assignee, description, priority, status, start_time, end_time, date } = req.body
       const results = await pool.query(
-        `INSERT INTO tasks (board_id, creator_id, assignee_id, task_description, task_priority, task_status, task_start_time, task_end_time, task_date) 
+        `INSERT INTO tasks (board_id, task_creator_id, task_assignee_id, task_description, task_priority, task_status, task_start_time, task_end_time, task_date) 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
         RETURNING *`,
          [board, creator, assignee, description, priority, status, start_time, end_time, date]
@@ -86,7 +87,7 @@ const createTask = async (req, res) => {
   // delete a task
   const deleteTask = async (req, res) => {
     try {
-        const task_id = req.params.id
+        const task_id = req.params.task_id
         const results = await pool.query('DELETE FROM tasks WHERE task_id = $1', [task_id])
         res.status(200).json(results.rows[0])
     } catch (error) {

@@ -11,7 +11,7 @@ function TasksDisplay (){
 
     const addTask = (event) => {
         event.preventDefault()
-        window.location.href = `/task`
+        window.location.href = `/board/${board}/${date}/create`
     }
 
     useEffect(() => {
@@ -38,12 +38,16 @@ function TasksDisplay (){
 
     return(
         <div>
-            {/* <button onClick={addTask}>Add Task</button> */}
-            {
-                tasks && tasks.length > 0 ? tasks.map((task) => 
-                    <TaskCard key={task.id} task={task} /> 
-                ) : <h3>{'No tasks available!'}</h3>
-            }
+            <button onClick={addTask}>Add Task</button>
+            <br></br>
+
+            <div style={{ display: 'flex', flexDirection:'row', flexWrap: 'wrap', justifyContent: 'center'}}>
+                {
+                    tasks && tasks.length > 0 ? tasks.map((task) => 
+                        <TaskCard key={task.id} task={task} /> 
+                    ) : <h3>{'No tasks available!'}</h3>
+                }
+            </div>
         </div>
     )
 }
