@@ -4,6 +4,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { MyContext } from "../components/ContextProvider";
 import addNewBoard from "../services/addNewBoard";
+import IconButton from "@mui/material/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
 
 function BoardsPopUp(props) {
   const { user, setUser } = useContext(MyContext);
@@ -38,8 +40,19 @@ function BoardsPopUp(props) {
         borderStyle: "double",
         borderRadius: "10px",
         padding: "50px",
+        position: "relative", // Added position relative for absolute positioning of the close icon
       }}
     >
+      <IconButton
+        onClick={() => set_display_boards_pop_up(false)}
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+        }}
+      >
+        <ClearIcon />
+      </IconButton>
       <p style={{ fontSize: "25px", fontWeight: "700" }}>CREATE NEW BOARD</p>
       <div>
         <input

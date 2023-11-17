@@ -131,8 +131,8 @@ const addNewBoard = async (req, res) => {
   }
 };
 
-// add member to an existing board
-const addBoardMembers = async (req, res) => {
+// add member to an existing board by member email
+const addBoardMembersByMemberEmail = async (req, res) => {
   try {
     const { board_id, board_member_email } = req.body;
     const user = await pool.query(
@@ -156,6 +156,20 @@ const addBoardMembers = async (req, res) => {
   }
 };
 
+// add member to an existing board by member id
+const addBoardMembersByMemberId = async (req, res) => {
+  try {
+    const { board_id, board_member_id } = req.body;
+    const results = await pool.query(
+      `INSERT INTO board_members (board_member_id, board_id) VALUES ($1, $2) RETURNING *`,
+      [board_member_id, board_id]
+    );
+    res.status(200).json(results.rows);
+  } catch (error) {
+    res.status(409).json({ error: error.message });
+  }
+};
+
 // get all boards
 const getAllBoards = async (req, res) => {
   try {
@@ -168,6 +182,18 @@ const getAllBoards = async (req, res) => {
 };
 
 // delete member from the board
+const deleteBoardMembersByMemberId = async (req, res) => {
+  try {
+    const { board_id, board_member_id } = req.body;
+    const results = await pool.query(
+      `DELETE FROM board_members WHERE board_member_id = $1 AND board_id = $2 RETURNING *`,
+      [board_member_id, board_id]
+    );
+    res.status(200).json(results.rows);
+  } catch (error) {
+    res.status(409).json({ error: error.message });
+  }
+};
 
 // delete the board
 
@@ -181,6 +207,8 @@ export default {
   getBoardsByMemberId,
   getBoardsByOwnerId,
   addNewBoard,
-  addBoardMembers,
+  addBoardMembersByMemberId,
+  addBoardMembersByMemberEmail,
+  deleteBoardMembersByMemberId,
   getAllBoards,
 };
