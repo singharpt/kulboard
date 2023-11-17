@@ -1,174 +1,220 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {Link, useParams } from 'react-router-dom';
-import BoardDetailsAPI from "../services/boardDetails.js"
-import TaskDetailsAPI from "../services/taskDetails.js"
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useParams } from "react-router-dom";
+import {
+  TextField,
+  Select,
+  MenuItem,
+  Button,
+  Grid,
+  Typography,
+  Paper,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
+import BoardDetailsAPI from "../services/boardDetails.js";
+import TaskDetailsAPI from "../services/taskDetails.js";
 import { MyContext } from "../components/ContextProvider";
 
-/*
-add task from date page
-default: set creator (from context provider), date (from url), board (from url) 
-drop down: set assignee, priority, status
-text: description, start time, end time 
-*/
-
 const CreateTask = () => {
+  const { board, date } = useParams();
+  const [selectedAssignee, setSelectedAssignee] = useState("");
+  const [boardInfo, setBoardInfo] = useState({});
+  const [boardMembers, setBoardMembers] = useState([]);
+  const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState("");
+  const [description, setDescription] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const { user } = useContext(MyContext);
 
-    const [selectedAssignee, setSelectedAssignee] = useState([])
-    const [creator, setCreator] = useState() // replaced with context provider
-    const [boardInfo, setBoardInfo] = useState([])
-    const [boardMembers, setBoardMembers] = useState([])
-    const [status, setStatus] = useState('')
-    const [priority, setPriority] = useState('')
-    const [description, setDescription] = useState('')
-    const [startTime, setStartTime] = useState('')
-    // const [endTime, setEndTime] = useState('')
-    const { user, setUser } = useContext(MyContext);
-    
-    const statusChoices = ['Pending', 'Completed']
-    const priorityChoices = ['Red', 'Yellow', 'Green']
+  const statusChoices = ["Pending", "Completed"];
+  const priorityChoices = ["Red", "Yellow", "Green"];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await BoardDetailsAPI.getBoardById(board);
+        setBoardInfo(data.data[0]);
+      } catch (error) {
+        throw error;
+      }
 
-
-    useEffect(() => {
-        (async () => {
-            console.log(user.user_id)
-            // get board info by id
-            try {
-                const data = await BoardDetailsAPI.getBoardById(board)
-                setBoardInfo(data.data)
-            } catch (error) {
-                throw error
-            }
-
-            // get board members
-            try {
-                const data = await BoardDetailsAPI.getUsersByBoardId(board)
-                console.log("setting board members data")
-                console.log(data.data)
-                setBoardMembers(data.data)
-            } catch (error) {
-                throw error
-            }
-
-            // get task creator details
-            // try {
-            //     const data = await UserDetailsAPI.getUserById(task[0].task_creator_id)
-            //     console.log(data.data)
-            //     setCreator(data.data)                
-            // } catch (error) {
-            //     throw error
-            // }
-        }) ();
-
-    }, [])
-
-    const handleOnChange = (e) => {
-        const { name, value } = e.target;
-    
-        if (name === 'assignee') { // not super foolproof
-            const temp = boardMembers.filter((member) => member.name === value)
-            console.log("new assignee is")
-            console.log(temp)
-            setSelectedAssignee(temp);
-        } 
-        else if (name === 'priority') {
-            setPriority(value);
-            console.log(value)
-        }
-        else if (name === 'description') {
-            setDescription(value);
-            console.log(value)
-        }
-        else if (name === 'start_time') {
-            setStartTime(value);
-        }
-        // else if (name === 'end_time') {
-        //     setEndTime(value);
-        // }
+      try {
+        const data = await BoardDetailsAPI.getUsersByBoardId(board);
+        setBoardMembers(data.data);
+      } catch (error) {
+        throw error;
+      }
     };
 
-    const handleOnSubmit = async (event) => {
-        event.preventDefault()
+    fetchData();
+  }, [board]);
 
-        event.preventDefault()
-        // send task details through edit api
-        console.log(board)
-        console.log(boardMembers[0].user_id)
-        console.log(selectedAssignee[0].user_id)
-        console.log(description)
-        console.log(priority)
-        console.log(startTime)
-        // console.log(endTime)
-        console.log(date)
-        const createdTask = {
-            board: board,
-            creator: user.user_id,
-            assignee: selectedAssignee[0].user_id,
-            description: description,
-            priority: priority,
-            status: "Pending",
-            start_time: startTime,
-            end_time: "10:00", // random for now
-            date: date
-        }
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
 
-        await TaskDetailsAPI.create(createdTask)
-        window.location = `/board/${board}/${date}`
+    if (name === "assignee") {
+      setSelectedAssignee(value);
+    } else if (name === "priority") {
+      setPriority(value);
+    } else if (name === "description") {
+      setDescription(value);
+    } else if (name === "start_time") {
+      setStartTime(value);
     }
+  };
 
-    const{board, date} = useParams();
+  const handleOnSubmit = async (event) => {
+    event.preventDefault();
 
-    return (
-      
-        <div>
-            <form onSubmit={handleOnSubmit}>
-                <h2>Creating new task for {boardInfo[0]?.board_name}</h2>
+    const createdTask = {
+      board: board,
+      creator: user.user_id,
+      assignee: selectedAssignee,
+      description: description,
+      priority: priority,
+      status: "Pending",
+      start_time: startTime,
+      end_time: "10:00", // random for now
+      date: date,
+    };
 
-                <div style={{ display: 'flex', flexDirection:'column', margin: '20px', justifyContent: 'center'}}>
-                    
-                    <label htmlFor="assignee">
-                        Select Assignee
-                        <select className='dropdown'id="assignee" name="assignee" value={selectedAssignee[0] ? selectedAssignee[0].name : ''} onChange={handleOnChange}>
-                            <option value="" disabled>--Select--</option>
-                            {boardMembers.map((member, index) => (
-                            <option key={index} value={member.name}>
-                                {member.name}
-                            </option>
-                            ))}
-                        </select>
-                    </label>
+    await TaskDetailsAPI.create(createdTask);
+    window.location = `/board/${board}/${date}`;
+  };
 
-                    <label htmlFor="priority">
-                        Select Priority
-                        <select className='dropdown'id="priority" name="priority" value={priority ? priority : ''} onChange={handleOnChange}>
-                            <option value="" disabled>--Select--</option>
-                            {priorityChoices.map((choice, index) => (
-                            <option key={index} value={choice}>
-                                {choice}
-                            </option>
-                            ))}
-                        </select>
-                    </label>
+  return (
+    <div>
+      <form onSubmit={handleOnSubmit}>
+        <Paper elevation={3} style={{ padding: "20px", margin: "20px" }}>
+          <Typography
+            variant="h5"
+            style={{ textTransform: "capitalize", marginBottom: "20px" }}
+          >
+            Creating new task for {boardInfo.board_name}
+          </Typography>
 
-                    <label htmlFor='description'>
-                        Task Description
-                        <input type='text' id='description' name='description' value={description} onChange={handleOnChange} />
-                    </label>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <FormControl fullWidth>
+                <InputLabel
+                  htmlFor="assignee"
+                  style={{
+                    background: "white",
+                    padding: "2px 5px",
+                    marginLeft: "5px",
+                  }}
+                >
+                  Select Assignee
+                </InputLabel>
+                <Select
+                  id="assignee"
+                  name="assignee"
+                  value={selectedAssignee}
+                  onChange={handleOnChange}
+                >
+                  <MenuItem value="" disabled>
+                    --Select--
+                  </MenuItem>
+                  {boardMembers.map((member, index) => (
+                    <MenuItem key={index} value={member.user_id}>
+                      {member.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
 
-                    <label htmlFor='start_time'>
-                        Start Time
-                        <input type='text' id='start_time' name='start_time' value={startTime} onChange={handleOnChange} />
-                    </label>
+            <Grid item xs={12} md={6}>
+              <FormControl fullWidth>
+                <InputLabel
+                  htmlFor="priority"
+                  style={{
+                    background: "white",
+                    padding: "2px 5px",
+                    marginLeft: "5px",
+                  }}
+                >
+                  Select Priority
+                </InputLabel>
+                <Select
+                  id="priority"
+                  name="priority"
+                  value={priority}
+                  onChange={handleOnChange}
+                >
+                  <MenuItem value="" disabled>
+                    --Select--
+                  </MenuItem>
+                  {priorityChoices.map((choice, index) => (
+                    <MenuItem key={index} value={choice}>
+                      {choice}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
 
-                    <div style={{ display: 'flex', flexDirection:'rows', padding: '15px', margin: '20px', justifyContent: 'center'}}>
-                        <button type='submit'>Create</button>
-                        <Link to={`/board/${board}/${date}`}><button>Cancel</button></Link>
-                    </div>
-                </div>
-            </form>
-        </div>
-      
-    )
-  }
-  
-  export default CreateTask
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="description"
+                name="description"
+                label="Task Description"
+                value={description}
+                onChange={handleOnChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="start_time"
+                name="start_time"
+                label="Start Time"
+                type="text"
+                value={startTime}
+                onChange={handleOnChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: "20px",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  type="submit"
+                  style={{
+                    backgroundColor: "green",
+                    color: "white",
+                    fontWeight: "500",
+                  }}
+                >
+                  Create
+                </Button>
+                <Link to={`/board/${board}/${date}`}>
+                  <Button
+                    variant="contained"
+                    style={{
+                      backgroundColor: "red",
+                      color: "white",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </Link>
+              </div>
+            </Grid>
+          </Grid>
+        </Paper>
+      </form>
+    </div>
+  );
+};
+
+export default CreateTask;
