@@ -72,7 +72,7 @@ function BoardBlocks(props) {
                     style={{
                       position: "absolute",
                       top: 10,
-                      right: 5,
+                      right: 2,
                     }}
                   >
                     <EditIcon style={{ fontSize: 20 }} />

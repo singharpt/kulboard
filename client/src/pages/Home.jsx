@@ -40,7 +40,7 @@ function Home() {
   }, [user?.user_id, showBoardsPopUp]);
 
   return (
-    <>
+    <div style={{ marginTop: "50px" }}>
       {showBoardsPopUp && <BoardsPopUp displayPopUp={setBoardsPopUp} />}
       {!showBoardsPopUp &&
         ownerBoards.length === 0 &&
@@ -68,17 +68,23 @@ function Home() {
         ))}
       {!showBoardsPopUp &&
         (ownerBoards.length > 0 || memberBoards.length > 0) && (
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "20px",
+            }}
+          >
             {ownerBoards.length > 0 && (
-              <div style={{ flex: 1, paddingRight: "16px" }}>
+              <div style={{ maxWidth: "50vmax" }}>
                 <div
                   style={{
                     fontSize: "24px",
                     fontWeight: "bold",
-                    marginBottom: "16px",
+                    marginBottom: "20px",
                   }}
                 >
-                  OWNER BOARDS
+                  BOARDS OWNED
                   <Button
                     variant="outlined"
                     onClick={() => setBoardsPopUp(true)}
@@ -95,22 +101,22 @@ function Home() {
               <Divider orientation="vertical" flexItem />
             )}
             {memberBoards.length > 0 && (
-              <div style={{ flex: 1, paddingLeft: "16px" }}>
+              <div style={{ maxWidth: "50max" }}>
                 <div
                   style={{
                     fontSize: "24px",
                     fontWeight: "bold",
-                    marginBottom: "8px",
+                    marginBottom: "22px",
                   }}
                 >
-                  MEMBER BOARDS
+                  MEMBER OF BOARDS
                 </div>
                 <BoardBlocks boards_data={memberBoards} authorization={false} />
               </div>
             )}
           </div>
         )}
-    </>
+    </div>
   );
 }
 
