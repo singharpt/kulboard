@@ -18,7 +18,7 @@ function EditBoards(props) {
     const allBoardMembersResponse = await get_all_board_members(
       board_data.board_id
     );
-    //console.log("Board Members", allBoardMembersResponse);
+    console.log("Board Members", allBoardMembersResponse);
 
     // filter admin from the user_list
     const nonAdminUserList = allUsersRespone.filter(
