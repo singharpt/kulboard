@@ -108,7 +108,7 @@ function Login() {
         <input
           type="text"
           placeholder="Enter your email"
-          onKeyDown={(e) => handleEmailButton(e)}
+          onKeyUp={(e) => handleEmailButton(e)}
           autoComplete="current-email"
           {...register("email")}
           style={{ fontSize: "20px", padding: "15px", margin: "10px" }}
