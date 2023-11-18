@@ -104,7 +104,7 @@ function TaskCard({ task }) {
                 Task Details
               </h2>
               <p>
-                <span style={{ fontWeight: "600" }}>Assigned by: </span>
+                <span style={{ fontWeight: "600" }}>Created by: </span>
                 {creator && creator.length > 0 ? creator[0].name : null}
               </p>
               <p>
