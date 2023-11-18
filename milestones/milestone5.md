@@ -54,7 +54,7 @@ Complete the checklist below detailing each baseline, custom, and stretch featur
 - [ ] The project includes a custom non-RESTful route with corresponding controller actions
 - [x] The project allows filtering and/or sorting as appropriate for your use case --> task assignees are filtered for task creation/update drop downs
 - [x] Data is automatically generated in response to a certain event or user action. Examples include generating a default inventory for a new user starting a game or creating a starter set of tasks for a user creating a new task app account --> several examples of this implemented in our webapp, one being the creator of a board/task is automatically generated using the logged in user's details
-- [ ] Data submitted via a POST or PATCH request is validated before the database is updated
+- [x] Data submitted via a POST or PATCH request is validated before the database is updated --> During login/sign up, we are performing front-end validation using yup
 
 ### Stretch Features
 
