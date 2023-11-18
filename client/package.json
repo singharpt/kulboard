@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "react-scripts start",
+    "dev": "vite",
+    "build": "vite build",
     "start": "serve build -s -n -L -p $PORT",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -51,5 +51,17 @@
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
     "vite": "^4.4.5"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
