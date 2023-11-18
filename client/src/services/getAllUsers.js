@@ -2,7 +2,7 @@ import useFetch from "../utilities/useFetch";
 
 const get_all_users = async () => {
   const request = {
-    URL: "http://localhost:3000/api/user",
+    URL: "https://kulboard-production.up.railway.app/api/user",
     METHOD: "GET",
   };
 

@@ -2,7 +2,7 @@ import useFetch from "../utilities/useFetch";
 
 const checkUserLoggedIn = async () => {
   const request = {
-    URL: "http://localhost:3000/api/checkUserLoggedIn",
+    URL: "https://kulboard-production.up.railway.app/api/checkUserLoggedIn",
     METHOD: "GET",
   };
 

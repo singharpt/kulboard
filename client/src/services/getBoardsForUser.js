@@ -2,7 +2,9 @@ import useFetch from "../utilities/useFetch";
 
 const boards_user_is_owner = async (owner_id) => {
   const request = {
-    URL: "http://localhost:3000/api/board/user/owner/" + owner_id,
+    URL:
+      "https://kulboard-production.up.railway.app/api/board/user/owner/" +
+      owner_id,
     METHOD: "GET",
   };
 
@@ -17,7 +19,9 @@ const boards_user_is_owner = async (owner_id) => {
 
 const boards_user_is_member = async (member_id) => {
   const request = {
-    URL: "http://localhost:3000/api/board/user/member/" + member_id,
+    URL:
+      "https://kulboard-production.up.railway.app/api/board/user/member/" +
+      member_id,
     METHOD: "GET",
   };
 

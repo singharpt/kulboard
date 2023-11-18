@@ -1,7 +1,8 @@
-import axios from 'axios'
+import axios from "axios";
 
-const getUserById = (user_id) => axios.get(`http://localhost:3000/api/user/${user_id}`)
+const getUserById = (user_id) =>
+  axios.get(`https://kulboard-production.up.railway.app/api/user/${user_id}`);
 
-export default{
-    getUserById
-}
+export default {
+  getUserById,
+};

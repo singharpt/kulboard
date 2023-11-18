@@ -2,7 +2,7 @@ import useFetch from "../utilities/useFetch";
 
 const registerUser = async (data) => {
   const request = {
-    URL: "http://localhost:3000/api/register",
+    URL: "https://kulboard-production.up.railway.app/api/register",
     METHOD: "POST",
     BODY: {
       name: data.name,

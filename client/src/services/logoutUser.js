@@ -2,7 +2,7 @@ import useFetch from "../utilities/useFetch";
 
 const logoutUser = async () => {
   const request = {
-    URL: "http://localhost:3000/api/logoutUser",
+    URL: "https://kulboard-production.up.railway.app/api/logoutUser",
     METHOD: "GET",
   };
 

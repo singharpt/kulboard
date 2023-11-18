@@ -2,7 +2,8 @@ import useFetch from "../utilities/useFetch";
 
 const get_all_board_members = async (board_id) => {
   const request = {
-    URL: "http://localhost:3000/api/board/users/" + board_id,
+    URL:
+      "https://kulboard-production.up.railway.app/api/board/users/" + board_id,
     METHOD: "GET",
   };
 

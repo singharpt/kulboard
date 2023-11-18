@@ -2,7 +2,7 @@ import useFetch from "../utilities/useFetch";
 
 const addNewBoard = async (board_name, user_id) => {
   const request = {
-    URL: "http://localhost:3000/api/board/add",
+    URL: "https://kulboard-production.up.railway.app/api/board/add",
     METHOD: "POST",
     BODY: {
       board_owner_id: user_id,

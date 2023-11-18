@@ -2,7 +2,7 @@ import useFetch from "../utilities/useFetch";
 
 const addBoardMembers = async (board_name, member_id) => {
   const request = {
-    URL: "http://localhost:3000/api/board/add/memberId",
+    URL: "https://kulboard-production.up.railway.app/api/board/add/memberId",
     METHOD: "POST",
     BODY: {
       board_id: board_name,
@@ -20,7 +20,7 @@ const addBoardMembers = async (board_name, member_id) => {
 
 const removeBoardMembers = async (board_name, member_id) => {
   const request = {
-    URL: "http://localhost:3000/api/board/remove/memberId",
+    URL: "https://kulboard-production.up.railway.app/api/board/remove/memberId",
     METHOD: "POST",
     BODY: {
       board_id: board_name,
